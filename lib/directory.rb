@@ -26,6 +26,7 @@ def input_students
     hobby = gets.chomp
 
     students << {name: name, cohort: cohort, hobby: hobby}
+    students.count == 1 ? plural = "student" : plural = "students"
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end

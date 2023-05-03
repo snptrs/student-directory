@@ -28,7 +28,6 @@ end
 def input_students
   puts "Please enter the student names"
   puts "Hit return twice to finish"
-  @students = []
   name = gets.chomp
 
   while !name.empty? do

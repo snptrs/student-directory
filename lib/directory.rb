@@ -39,17 +39,18 @@ def print_header
 end
 
 def print(students)
-
-  cohorts = students.map {|e| e[:cohort]}
-  puts cohorts
-
-  count = 0
-  while count < students.length
-      puts "#{count + 1}. #{students[count][:name]} "\
-           "(#{students[count][:cohort]} cohort), "\
-           "whose favourite hobby is #{students[count][:hobby]}".center(75)
-
-      count += 1
+  cohorts = students.map { |e| e[:cohort] }.uniq
+  cohorts.each do |cohort|
+    puts "====#{cohort} cohort====".center(75)
+    count = 0
+    students.each do |s|
+      if s[:cohort] == cohort
+        puts "#{count + 1}. #{s[:name]}, "\
+            "whose favourite hobby is #{s[:hobby]}".center(75)
+        count += 1
+      end
+    end
+    puts "\n"
   end
 end
 

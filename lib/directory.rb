@@ -2,13 +2,13 @@ def input_students
   puts "Please enter the student names"
   puts "Hit return twice to finish"
   students = []
-  name = gets.chomp
+  name = gets.delete_suffix("\n")
 
   cohort = "" # Su
   while !name.empty? do
     loop do
       puts "What cohort is #{name} in? Type: January, February, March or April"
-      cohort = gets.chomp
+      cohort = gets.delete_suffix("\n")
 
       case cohort
       when ""
@@ -23,12 +23,12 @@ def input_students
     end
 
     puts "What's #{name}'s favourite hobby?"
-    hobby = gets.chomp
+    hobby = gets.delete_suffix("\n")
 
     students << {name: name, cohort: cohort, hobby: hobby}
     students.count == 1 ? plural = "student" : plural = "students"
     puts "Now we have #{students.count} #{plural}"
-    name = gets.chomp
+    name = gets.delete_suffix("\n")
   end
 
   students

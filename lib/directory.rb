@@ -39,6 +39,10 @@ def print_header
 end
 
 def print(students)
+
+  cohorts = students.map {|e| e[:cohort]}
+  puts cohorts
+
   count = 0
   while count < students.length
       puts "#{count + 1}. #{students[count][:name]} "\

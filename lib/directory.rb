@@ -4,10 +4,28 @@ def input_students
   students = []
   name = gets.chomp
 
+  cohort = "" # Su
   while !name.empty? do
+    loop do
+      puts "What cohort is #{name} in? Type: January, February, March or April"
+      cohort = gets.chomp
+
+      case cohort
+      when ""
+        cohort = "January" # Default when nothing entered
+        break
+      when "January", "February", "March", "April"
+        break
+      else
+        puts "That's not a valid cohort. Please try again."
+      end
+
+    end
+
     puts "What's #{name}'s favourite hobby?"
     hobby = gets.chomp
-    students << {name: name, cohort: :november, hobby: hobby}
+
+    students << {name: name, cohort: cohort, hobby: hobby}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -23,7 +41,10 @@ end
 def print(students)
   count = 0
   while count < students.length
-      puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort), whose favourite hobby is #{students[count][:hobby]}".center(75)
+      puts "#{count + 1}. #{students[count][:name]} "\
+           "(#{students[count][:cohort]} cohort), "\
+           "whose favourite hobby is #{students[count][:hobby]}".center(75)
+
       count += 1
   end
 end

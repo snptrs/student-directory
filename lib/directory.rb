@@ -44,6 +44,7 @@ def input_students
 end
 
 def load_students(filename = "students.csv")
+  @students = []
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
@@ -71,7 +72,7 @@ end
 def try_load_students
   filename = ARGV.first
   if filename.nil?
-    load_students
+    load_students if File.exist?("students.csv")
   elsif File.exist?(filename)
     load_students(filename)
   else

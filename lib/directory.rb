@@ -37,10 +37,24 @@ def input_students
   name = STDIN.gets.chomp
 
   while !name.empty? do
-    @students << {name: name, cohort: :november}
+    process_student(name, :november)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(",")
+    process_student(name, cohort)
+  end
+  file.close
+  puts "Loaded #{@students.count} from #{filename}"
+end
+
+def process_student(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 def save_students
@@ -55,23 +69,14 @@ end
 
 def try_load_students
   filename = ARGV.first
-  return if filename.nil?
-  if File.exist?(filename)
+  if filename.nil?
+    load_students
+  elsif File.exist?(filename)
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
   else
     puts "Sorry, #{filename} doesn't exist"
     exit
   end
-end
-
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort.to_sym}
-  end
-  file.close
 end
 
 def print_header

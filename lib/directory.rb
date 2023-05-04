@@ -50,7 +50,7 @@ def load_students(filename = "students.csv")
     process_student(name, cohort)
   end
   file.close
-  puts "Loaded #{@students.count} from #{filename}"
+  action_feedback("Loaded #{@students.count} from #{filename}")
 end
 
 def process_student(name, cohort)
@@ -65,6 +65,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  action_feedback("Student list saved")
 end
 
 def try_load_students
@@ -100,6 +101,10 @@ def interactive_menu
     selection = STDIN.gets.chomp
     process(selection)
   end
+end
+
+def action_feedback(result)
+  puts "\n#{result}\n\n"
 end
 
 try_load_students

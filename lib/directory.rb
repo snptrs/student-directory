@@ -10,6 +10,14 @@ def print_menu
   puts '9. Exit'
 end
 
+def interactive_menu
+  loop do
+    print_menu
+    selection = $stdin.gets.chomp
+    process(selection)
+  end
+end
+
 def process(selection)
   case selection
   when '1'
@@ -29,18 +37,6 @@ def process(selection)
   end
 end
 
-def select_file
-  puts 'Enter a filename,  or press return to use students.csv'
-  filename = $stdin.gets.chomp
-  filename.empty? ? 'students.csv' : filename
-end
-
-def show_students
-  print_header
-  print_students
-  print_footer
-end
-
 def input_students
   puts 'Please enter the student names'
   puts 'Hit return twice to finish'
@@ -51,6 +47,18 @@ def input_students
     puts "Now we have #{@students.count} students"
     name = $stdin.gets.chomp
   end
+end
+
+def show_students
+  print_header
+  print_students
+  print_footer
+end
+
+def select_file
+  puts 'Enter a filename,  or press return to use students.csv'
+  filename = $stdin.gets.chomp
+  filename.empty? ? 'students.csv' : filename
 end
 
 def load_students(filename = 'students.csv')
@@ -101,14 +109,6 @@ end
 
 def print_footer
   puts "Overall, we have #{@students.count} great students"
-end
-
-def interactive_menu
-  loop do
-    print_menu
-    selection = $stdin.gets.chomp
-    process(selection)
-  end
 end
 
 def action_feedback(result)

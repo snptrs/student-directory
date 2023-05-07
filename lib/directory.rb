@@ -38,13 +38,32 @@ def process(selection)
 end
 
 def input_students
-  puts 'Please enter the student names'
-  puts 'Hit return twice to finish'
-  name = $stdin.gets.chomp
+  puts "Please enter the student names"
+  puts "Hit return twice to finish"
+  students = []
+  name = gets.delete_suffix("\n")
 
-  until name.empty?
-    process_student(name, :november)
-    puts "Now we have #{@students.count} students"
+  cohort = ""
+  while !name.empty? do
+    loop do
+      puts "What cohort is #{name} in? Type a month."
+      cohort = gets.chomp
+
+      case cohort
+      when ""
+        cohort = "January" # Default when nothing entered
+        break
+      when "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+        break
+      else
+        puts "That's not a valid cohort. Please try again."
+      end
+
+    end
+
+    process_student(name, cohort)
+    @students.count == 1 ? plural = "student" : plural = "students"
+    puts "Now we have #{@students.count} #{plural}"
     name = $stdin.gets.chomp
   end
 end
@@ -97,18 +116,27 @@ def try_load_students(filename = ARGV.first)
 end
 
 def print_header
-  puts 'The students of Villains Academy'
-  puts '-------------'
+  puts "The students of Villains Academy".center(75)
+  puts "-------------".center(75)
 end
 
 def print_students
-  @students.each_with_index do |student, i|
-    puts "#{i + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+  cohorts = @students.map { |e| e[:cohort] }.uniq
+  cohorts.each do |cohort|
+    puts "====#{cohort} cohort====".center(75)
+    count = 0
+    @students.each do |s|
+      if s[:cohort] == cohort
+        puts "#{count + 1}. #{s[:name]}"
+        count += 1
+      end
+    end
+    puts "\n"
   end
 end
 
 def print_footer
-  puts "Overall, we have #{@students.count} great students"
+  puts "Overall, we have #{@students.count} great students".center(75)
 end
 
 def action_feedback(result)
